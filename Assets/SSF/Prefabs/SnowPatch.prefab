@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3346878}
   - 65: {fileID: 6555154}
   - 23: {fileID: 2342132}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410898}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: SnowPatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ Transform:
   m_GameObject: {fileID: 135326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 50.004513, y: 0, z: 49.9099}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children:
   - {fileID: 416464}
   m_Father: {fileID: 0}
