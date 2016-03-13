@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSize: 1.5
-  GrowSpeed: 5
+  GrowSpeed: 10
   ShouldDrop: 0
 --- !u!135 &13543082
 SphereCollider:

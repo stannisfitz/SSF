@@ -3,9 +3,14 @@ guid: b08036be3905fe444852aa7a501d2368
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Skyball_WithoutCap
     4300002: Skyball+WithoutCap
     4300004: Sphere002
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
