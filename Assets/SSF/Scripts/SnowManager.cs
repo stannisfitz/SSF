@@ -16,7 +16,7 @@ public class SnowManager : MonoBehaviour
     private List<GameObject> _snowPatches;
     private List<SnowBall> _snowBalls = new List<SnowBall>();
 
-    private const int k_patchSize = 1;
+    private const float k_patchSize = 0.5f;
     private const int k_size = 200;
     void Awake()
     {
@@ -36,7 +36,7 @@ public class SnowManager : MonoBehaviour
                     sp.transform.parent = transform;
                     sp.transform.up = hitInfo.normal;
                     _snowPatches.Add(sp);
-                    j += sp.transform.forward.z;
+                    j += sp.transform.forward.z*0.5f;
                 }
                 else
                 {
