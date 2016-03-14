@@ -62,7 +62,7 @@
             m_ForwardAmount = move.z;
 
             ApplyExtraTurnRotation();
-            bool boosting = Input.GetKey(KeyCode.LeftShift);
+            bool boosting = Input.GetButton("Dash");
             float range = 1.5f - 0.4f;
             float factor = _cc._currentSnowball == null ? 1.0f : Mathf.Max(0.3f, 1.0f - ((_cc._currentSnowball.transform.localScale.x-0.4f) / range));
         transform.position += transform.forward * m_ForwardAmount * move.z * factor*Time.deltaTime * (boosting?5.0f:3.0f);//grr

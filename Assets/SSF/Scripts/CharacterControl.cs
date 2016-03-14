@@ -52,13 +52,13 @@ using UnityStandardAssets.CrossPlatformInput;
             Application.LoadLevel(1);
         }
 
-        if (_currentSnowball == null && SnowBallPrefab != null && Input.GetKeyDown(KeyCode.Space))
+        if (_currentSnowball == null && SnowBallPrefab != null && Input.GetButtonDown("Action"))
         {
             _currentSnowball = GameObject.Instantiate(SnowBallPrefab, transform.position+transform.forward*2.5f, Quaternion.identity) as GameObject;
             _currentSnowball.transform.parent = transform;
             _animator.SetTrigger("Action");
         }
-        else if (_currentSnowball != null && (_currentSnowball.GetComponent<SnowBall>().ShouldDrop || Input.GetKeyDown(KeyCode.Space)))
+        else if (_currentSnowball != null && (_currentSnowball.GetComponent<SnowBall>().ShouldDrop || Input.GetButtonDown("Action")))
         {
             _currentSnowball.GetComponent<SnowBall>().Drop();
             _animator.SetTrigger("Action");
@@ -89,7 +89,7 @@ using UnityStandardAssets.CrossPlatformInput;
                 m_Move = v * Vector3.forward + h * Vector3.right;
             }
         // walk speed multiplier
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetButton("Dash"))
         {
             _animator.SetBool("Running", true);
             m_Move *= 2.0f;

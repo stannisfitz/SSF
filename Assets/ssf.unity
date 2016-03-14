@@ -164,7 +164,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414918, guid: d8ffc8e595f8eb24d8a585415af11fff, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11490860, guid: d8ffc8e595f8eb24d8a585415af11fff, type: 2}
       propertyPath: TargetTransform
