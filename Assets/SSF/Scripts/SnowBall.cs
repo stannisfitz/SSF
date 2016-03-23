@@ -47,30 +47,20 @@ public class SnowBall : MonoBehaviour
 
     private void UpdatePosition(bool canGrow = true)
     {
-        RaycastHit hitInfo;
-        Ray ray = new Ray(transform.position+transform.up*0.5f,-transform.up);
-        if (Physics.Raycast(ray, out hitInfo, float.MaxValue, 1<<LayerMask.NameToLayer("Terrain")))
+        Ray ray = new Ray(transform.position+Vector3.up*0.5f,-Vector3.up);
+        RaycastHit[] hits = Physics.SphereCastAll(ray, transform.localScale.x*0.25f, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch"));
+        foreach(var hit in hits)
         {
-            Vector3 hitPos = hitInfo.point;
-            Vector3 parentPos = transform.parent.position;
-            parentPos.y = 0.0f;
             float scale = transform.localScale.x;
-            hitPos.x = 0.0f;
-            hitPos.z = 0.0f;
-            transform.position = parentPos + transform.parent.forward * 0.3f + transform.parent.forward * scale * 0.5f + hitPos + transform.up * 0.5f * scale;
             float distance = (_lastHitPosition - transform.position).magnitude;
             float lastScale = scale;
-            if (SnowManager.Instance.UpdateSnow(_lastHitPosition, transform.position))
+            if (SnowManager.Instance.UpdateSnow(_lastHitPosition, transform.position, hit.collider))
             {
                 scale += Mathf.Min(0.1f, distance * Time.deltaTime * GrowSpeed);
                 scale = Mathf.Min(scale, MaxSize);
                 transform.localScale = new Vector3(scale, scale, scale);
+                _rigidBody.mass = scale;
             }
-        }
-        if (canGrow && Mathf.Abs(transform.parent.position.y - transform.position.y) > 1.0f)
-        {
-            //grr
-            ShouldDrop = true;
         }
         _lasPosition = transform.position;
         _lastHitPosition = transform.position;

@@ -400,7 +400,8 @@ GameObject:
   - 135: {fileID: 13549776}
   - 23: {fileID: 2348932}
   - 54: {fileID: 5459478}
-  m_Layer: 0
+  - 114: {fileID: 11468948}
+  m_Layer: 9
   m_Name: SnowBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +493,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 2.606, z: 24.09}
+  m_LocalPosition: {x: 25, y: 3.31, z: 24.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477732}
@@ -699,7 +700,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158156}
   m_LocalRotation: {x: 0.2756374, y: 0, z: 0, w: 0.9612617}
-  m_LocalPosition: {x: 25, y: 5.8, z: 21.9}
+  m_LocalPosition: {x: 25, y: 6.26, z: 21.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 457438}
@@ -738,7 +739,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 2.901, z: 25}
+  m_LocalPosition: {x: 25, y: 3.31, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 457438}
@@ -931,7 +932,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5d69df9d9d11e49d110086ba44295342, type: 2}
+  - {fileID: 2100000, guid: 7dd671bc2dbee354f844a9fc58c60315, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -1026,6 +1027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c447a7c642a1bd4cb77e125b27f3b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SnapOnFloor: 1
   TargetTransform: {fileID: 475308}
 --- !u!114 &11441772
 MonoBehaviour:
@@ -1038,7 +1040,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c447a7c642a1bd4cb77e125b27f3b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SnapOnFloor: 0
   TargetTransform: {fileID: 475308}
+--- !u!114 &11468948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb06b8a61a5582408eea29f43a067d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxSize: 3
+  GrowSpeed: 0.5
+  ShouldDrop: 0
 --- !u!124 &12453732
 Behaviour:
   m_ObjectHideFlags: 1

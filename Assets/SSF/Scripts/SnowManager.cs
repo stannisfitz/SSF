@@ -92,27 +92,24 @@ public class SnowManager : MonoBehaviour
         }
     }
 
-    public bool UpdateSnow(Vector3 lastPos, Vector3 pos)
+    public bool UpdateSnow(Vector3 lastPos, Vector3 pos, Collider snowPatchCollider)
     {
         lastPos.y = pos.y;
         if (Vector3.Distance(lastPos, pos) < 0.01f)
         {
             return false;
         }
-
-        RaycastHit hitInfo;
-        Ray ray = new Ray(new Vector3(pos.x, 9999.9f, pos.z), -transform.up);
-        if (Physics.Raycast(ray, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
+        GameObject sp = snowPatchCollider.transform.parent.gameObject;
+        if(sp.transform.localScale.y <= 0.15f)
         {
-            GameObject sp = hitInfo.collider.transform.parent.gameObject;
-            sp.transform.localScale -= new Vector3(0.0f, 0.02f, 0.0f);
-            if (sp.transform.localScale.y <= 0.15f)
-            {
-                sp.SetActive(false);
-            }
-            return true;
+            return false;
         }
-        return false;
+        sp.transform.localScale -= new Vector3(0.0f, 0.02f, 0.0f);
+        if (sp.transform.localScale.y <= 0.15f)
+        {
+            sp.SetActive(false);
+        }
+        return true;
 
     }
 }
