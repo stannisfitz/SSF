@@ -16,6 +16,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
         private Animator _animator;
         private Vector3 _startPosition;
+        private bool _action = false;
 
     void Awake()
     {
@@ -52,14 +53,16 @@ using UnityStandardAssets.CrossPlatformInput;
             Application.LoadLevel(1);
         }
 
-        if (_currentSnowball == null && SnowBallPrefab != null && Input.GetButtonDown("Action"))
+        if (_currentSnowball == null && SnowBallPrefab != null && (Input.GetButtonDown("Action")|| _action))
         {
+            _action = false;
             _currentSnowball = GameObject.Instantiate(SnowBallPrefab, transform.position+transform.forward*2.5f, Quaternion.identity) as GameObject;
             _currentSnowball.transform.parent = transform;
             _animator.SetTrigger("Action");
         }
-        else if (_currentSnowball != null && (_currentSnowball.GetComponent<SnowBall>().ShouldDrop || Input.GetButtonDown("Action")))
+        else if (_currentSnowball != null && (_currentSnowball.GetComponent<SnowBall>().ShouldDrop || Input.GetButtonDown("Action") || _action))
         {
+            _action = false;
             _currentSnowball.GetComponent<SnowBall>().Drop();
             _animator.SetTrigger("Action");
             _currentSnowball = null;
@@ -105,4 +108,9 @@ using UnityStandardAssets.CrossPlatformInput;
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;
         }
+
+    public void StartAction()
+    {
+        _action = true;
+    }
     }
