@@ -11,6 +11,7 @@ public class SnowBall : MonoBehaviour
 
     public float MaxSize = 3.0f;
     public float GrowSpeed = 0.5f;
+    public float BounceFactor = 50.0f;
 
     public Material[] SnowMaterial;
 
@@ -72,5 +73,18 @@ public class SnowBall : MonoBehaviour
     public void SetTeam(int team)
     {
         _renderer.material = SnowMaterial[team];
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == gameObject.layer)
+        {
+            Vector3 delta = transform.position - collision.collider.transform.position;
+            Rigidbody r = collision.collider.GetComponent<Rigidbody>();
+            if (r != null)
+            {
+                _rigidBody.AddForce(delta.normalized * r.mass * BounceFactor);
+            }
+        }
     }
 }

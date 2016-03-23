@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour
             r.AddForce(f);
             RigidBodyComponent.gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         }
-        force = force.normalized * MoveForce;
+        float mult = RigidBodyComponent.mass < 0 ? Mathf.Sqrt(RigidBodyComponent.mass) : 1.0f;
+        force = force.normalized * MoveForce*mult;
 
         RigidBodyComponent.AddForce(force);
 
