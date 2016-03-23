@@ -60,13 +60,6 @@ using UnityStandardAssets.CrossPlatformInput;
             _currentSnowball.transform.parent = transform;
             _animator.SetTrigger("Action");
         }
-        else if (_currentSnowball != null && (_currentSnowball.GetComponent<SnowBall>().ShouldDrop || Input.GetButtonDown("Action") || _action))
-        {
-            _action = false;
-            _currentSnowball.GetComponent<SnowBall>().Drop();
-            _animator.SetTrigger("Action");
-            _currentSnowball = null;
-        }
         }
 
 

@@ -12,14 +12,15 @@ public class SnowBall : MonoBehaviour
     public float MaxSize = 3.0f;
     public float GrowSpeed = 0.5f;
 
+    public Material[] SnowMaterial;
+
     private Rigidbody _rigidBody;
     private Collider _collider;
+    private Renderer _renderer;
 
     private Vector3 _lasPosition;
     private Vector3 _lastHitPosition;
     private bool _wasOnFloor = false;
-
-    public bool ShouldDrop = false;//grr
     private State _currentState = State.Rolling;
     public State CurrentState
     {
@@ -30,6 +31,8 @@ public class SnowBall : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
+        _renderer = GetComponent<Renderer>();
+
     }
     void Start()
     {
@@ -65,18 +68,9 @@ public class SnowBall : MonoBehaviour
         _lasPosition = transform.position;
         _lastHitPosition = transform.position;
     }
-    public void Drop()
+
+    public void SetTeam(int team)
     {
-        if(_currentState != State.Rolling)
-        {
-            return;
-        }
-        transform.parent = null;
-        _currentState = State.Free;
-        _collider.enabled = true;
-        _rigidBody.isKinematic = false;
-        _rigidBody.WakeUp();
-        _rigidBody.velocity = (transform.position - _lasPosition).normalized * 3.0f;
-        SnowManager.Instance.SnowBallDropped(this);
+        _renderer.material = SnowMaterial[team];
     }
 }

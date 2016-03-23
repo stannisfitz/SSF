@@ -124,6 +124,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11424328, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: SnowBallPrefab
+      value: 
+      objectReference: {fileID: 114546, guid: a3042ef6fd3e8c0489f259f6d0be0073, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_IsPrefabParent: 0

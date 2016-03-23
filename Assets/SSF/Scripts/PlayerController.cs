@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float MoveForce = 10.0f;
     public Rigidbody RigidBodyComponent;
     public Animator AnimatorComponent;
+    public GameObject SnowBallPrefab;
 
     private int _playerId = 0;
 	
@@ -36,6 +37,19 @@ public class PlayerController : MonoBehaviour
             force -= Vector3.right;
         }
 
+        if ((_playerId == 0 && Input.GetKeyUp(KeyCode.Space)) || (_playerId == 1 && Input.GetKeyUp(KeyCode.RightControl)))
+        {
+            AnimatorComponent.SetTrigger("Action");
+            GameObject snowBall = GameObject.Instantiate(SnowBallPrefab, RigidBodyComponent.transform.position+AnimatorComponent.transform.forward*0.5f, RigidBodyComponent.transform.rotation) as GameObject;
+            snowBall.transform.localScale = RigidBodyComponent.gameObject.transform.localScale;
+            snowBall.GetComponent<SnowBall>().SetTeam(Team);
+            Rigidbody r = snowBall.GetComponent<Rigidbody>();
+            r.mass = RigidBodyComponent.mass;
+            r.velocity = RigidBodyComponent.velocity;
+            Vector3 f = r.velocity.magnitude > 0.05f ? r.velocity*2.0f : AnimatorComponent.transform.forward*2.0f;
+            r.AddForce(f);
+            RigidBodyComponent.gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        }
         force = force.normalized * MoveForce;
 
         RigidBodyComponent.AddForce(force);
