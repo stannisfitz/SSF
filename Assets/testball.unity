@@ -300,7 +300,8 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8147842, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1152844871
@@ -343,7 +344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnowPatchPrefab: {fileID: 135326, guid: 7755f3ba34ea71e4aa56c2b78a051b94, type: 2}
+  SnowMaterial: {fileID: 2100000, guid: ca3538eb14fa4e949a5121405f25d9d4, type: 2}
   FortPrefab: {fileID: 132616, guid: 698c3dfdab1243940af31176bf004a30, type: 2}
+  vertices: []
 --- !u!1 &1315915852
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +416,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1747254433}
-  - 33: {fileID: 1747254436}
   - 65: {fileID: 1747254435}
   - 23: {fileID: 1747254434}
   - 54: {fileID: 1747254437}
@@ -430,7 +432,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1747254432}
-  m_LocalRotation: {x: -0.8229379, y: 0, z: 0, w: 0.56813127}
+  m_LocalRotation: {x: -0.82293797, y: 0, z: 0, w: 0.5681313}
   m_LocalPosition: {x: -0.37999916, y: -0.40421486, z: 7.115245}
   m_LocalScale: {x: 5.940262, y: 16.082584, z: 1.9517732}
   m_Children: []
@@ -446,7 +448,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4d42b08d761358e49b969b4f3136ec7d, type: 2}
+  - {fileID: 2100000, guid: 7dd671bc2dbee354f844a9fc58c60315, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -474,13 +476,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1747254436
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1747254432}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &1747254437
 Rigidbody:
   m_ObjectHideFlags: 0
