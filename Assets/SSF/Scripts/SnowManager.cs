@@ -98,10 +98,6 @@ public class SnowManager : MonoBehaviour
     public bool UpdateSnow(Vector3 lastPos, Vector3 pos, Collider snowPatchCollider)
     {
         lastPos.y = pos.y;
-        if (Vector3.Distance(lastPos, pos) < 0.01f)
-        {
-            return false;
-        }
 
         RaycastHit hitInfo;
         Ray r = new Ray(pos, Vector3.down);
