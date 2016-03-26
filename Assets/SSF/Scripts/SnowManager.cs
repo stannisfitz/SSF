@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class SnowManager : MonoBehaviour
 {
-    public GameObject SnowPatchPrefab;
+    public GameObject SnowObjectPrefab;
+
     public Material SnowMaterial;
     private static SnowManager _instance;
     public static SnowManager Instance
@@ -13,39 +14,12 @@ public class SnowManager : MonoBehaviour
     }
 
     public GameObject FortPrefab;
-
-    private List<GameObject> _snowPatches;
+    
     private List<SnowBall> _snowBalls = new List<SnowBall>();
-
-    private const float k_patchSize = 0.5f;
-    private const int k_size = 200;
     void Awake()
     {
-        GenerateSnow();
         SnowManager._instance = this;
-        _snowPatches = new List<GameObject>();
-        /*for (float i = -k_size * 0.5f; i < k_size * 0.5f; i += k_patchSize)
-        {
-            for (float j = -k_size * 0.5f; j < k_size * 0.5f;)
-            {
-                RaycastHit hitInfo;
-                float x = i + (k_patchSize * 0.5f);
-                float y = j + (k_patchSize * 0.5f);
-                Ray ray = new Ray(new Vector3(x, 9999.9f, y), -transform.up);
-                if (Physics.Raycast(ray, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
-                {
-                    GameObject sp = GameObject.Instantiate(SnowPatchPrefab, new Vector3(x, hitInfo.point.y, y), Quaternion.identity) as GameObject;
-                    sp.transform.parent = transform;
-                    sp.transform.up = hitInfo.normal;
-                    _snowPatches.Add(sp);
-                    j += sp.transform.forward.z*0.5f;
-                }
-                else
-                {
-                    j += k_patchSize;
-                }
-            }
-        }*/
+        GenerateSnow();
     }
 
     public void SnowBallDropped(SnowBall snowBall)
@@ -128,6 +102,11 @@ public class SnowManager : MonoBehaviour
 
     private void GenerateSnow()
     {
+        if (SnowObjectPrefab != null)
+        {
+            GameObject.Instantiate(SnowObjectPrefab);
+            return;
+        }
         BuildDecalForObject(gameObject);
         Mesh mesh = CreateMesh();
         GameObject g = new GameObject("SnowObject");
@@ -138,7 +117,6 @@ public class SnowManager : MonoBehaviour
         MeshRenderer mr = g.AddComponent<MeshRenderer>();
         MeshCollider mc = g.AddComponent<MeshCollider>();
         mr.material = SnowMaterial;
-        return;
     }
 
     private List<Vector3> bufVertices = new List<Vector3>();

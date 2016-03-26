@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
     static int _numPlayers = 0;
     public int Team = 0;
     public float MoveForce = 10.0f;
+    public float TurnSpeed = 100.0f;
     public Rigidbody RigidBodyComponent;
     public Animator AnimatorComponent;
     public GameObject SnowBallPrefab;
+    public Transform Princess;
 
     private int _playerId = 0;
 	
@@ -18,26 +21,12 @@ public class PlayerController : MonoBehaviour
     }
 	void Update ()
     {
-        Vector3 force = Vector3.zero;
-        if ((_playerId == 0 && Input.GetKey(KeyCode.W)) || (_playerId == 1 && Input.GetKey(KeyCode.UpArrow)))
-        {
-            force += Vector3.forward;
-        }
-        else if ((_playerId == 0 && Input.GetKey(KeyCode.S)) || (_playerId == 1 && Input.GetKey(KeyCode.DownArrow)))
-        {
-            force -= Vector3.forward;
-        }
-
-        if ((_playerId == 0 && Input.GetKey(KeyCode.D)) || (_playerId == 1 && Input.GetKey(KeyCode.RightArrow)))
-        {
-            force += Vector3.right;
-        }
-        else if ((_playerId == 0 && Input.GetKey(KeyCode.A)) || (_playerId == 1 && Input.GetKey(KeyCode.LeftArrow)))
-        {
-            force -= Vector3.right;
-        }
-
-        if ((_playerId == 0 && Input.GetKeyUp(KeyCode.Space)) || (_playerId == 1 && Input.GetKeyUp(KeyCode.RightControl)))
+        Vector3 forward = RigidBodyComponent.transform.position- Princess.position;
+        forward.y = 0.0f;
+        Vector3 force = forward*CrossPlatformInputManager.GetAxis("Vertical" + (_playerId + 1));
+        float turn = TurnSpeed*CrossPlatformInputManager.GetAxis("Horizontal" + (_playerId + 1));
+        Princess.parent.RotateAround(RigidBodyComponent.transform.position, Vector2.up, turn * Time.deltaTime);
+        if (CrossPlatformInputManager.GetButtonDown("Throw" + (_playerId + 1)))
         {
             AnimatorComponent.SetTrigger("Action");
             GameObject snowBall = GameObject.Instantiate(SnowBallPrefab, RigidBodyComponent.transform.position+AnimatorComponent.transform.forward*0.5f, RigidBodyComponent.transform.rotation) as GameObject;
@@ -50,7 +39,8 @@ public class PlayerController : MonoBehaviour
             r.AddForce(f);
             RigidBodyComponent.gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         }
-        float mult = RigidBodyComponent.mass < 0 ? Mathf.Sqrt(RigidBodyComponent.mass) : 1.0f;
+
+        float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
         force = force.normalized * MoveForce*mult;
 
         RigidBodyComponent.AddForce(force);
