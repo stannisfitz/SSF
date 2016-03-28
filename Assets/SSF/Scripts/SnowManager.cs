@@ -77,7 +77,7 @@ public class SnowManager : MonoBehaviour
         Ray r = new Ray(pos, Vector3.down);
         if (Physics.Raycast(r, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            Mesh sharedMesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
+                Mesh sharedMesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
             Mesh mesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
 
             Vector3[] sharedVertices = sharedMesh.vertices;

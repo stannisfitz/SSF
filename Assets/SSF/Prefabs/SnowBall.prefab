@@ -91,8 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb06b8a61a5582408eea29f43a067d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSize: 3
+  MaxSize: 2
   GrowSpeed: 0.5
+  BounceFactor: 50
   SnowMaterial:
   - {fileID: 2100000, guid: 7dd671bc2dbee354f844a9fc58c60315, type: 2}
   - {fileID: 2100000, guid: b0974b78e01e1214baaa4a4855c9e178, type: 2}

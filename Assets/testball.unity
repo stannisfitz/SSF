@@ -3947,6 +3947,10 @@ Prefab:
       propertyPath: BounceFactor
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 11468948, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: MaxSize
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_IsPrefabParent: 0
@@ -8751,6 +8755,10 @@ Prefab:
     - target: {fileID: 432936, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
       propertyPath: m_LocalPosition.z
       value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 11468948, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: MaxSize
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8147842, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}

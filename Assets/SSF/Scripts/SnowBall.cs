@@ -53,6 +53,7 @@ public class SnowBall : MonoBehaviour
     {
         float scale = transform.localScale.x;
         RaycastHit hitInfo;
+        RaycastHit hitInfo2;
         Ray r1 = new Ray(transform.position + Vector3.up * 0.5f, Vector3.down);
         Ray r2 = new Ray(transform.position + Vector3.up * 0.5f + Vector3.forward*scale*0.25f, Vector3.down);
         Ray r3 = new Ray(transform.position + Vector3.up * 0.5f - Vector3.forward * scale * 0.25f, Vector3.down);
@@ -70,32 +71,87 @@ public class SnowBall : MonoBehaviour
         int triangleId5 = -1;
         if (Physics.Raycast(r1, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            p1 = hitInfo.point;
-            triangleId1 = hitInfo.triangleIndex;
+            bool snow = true;
+            if (Physics.Raycast(r1, out hitInfo2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hitInfo2.distance < hitInfo.distance)
+                {
+                    snow = false;
+                }
+            }
+            if (snow)
+            {
+                p1 = hitInfo.point;
+                triangleId1 = hitInfo.triangleIndex;
+            }
         }
 
         if (Physics.Raycast(r2, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            p2 = hitInfo.point;
-            triangleId2 = hitInfo.triangleIndex;
+            bool snow = true;
+            if (Physics.Raycast(r2, out hitInfo2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hitInfo2.distance < hitInfo.distance)
+                {
+                    snow = false;
+                }
+            }
+            if (snow)
+            {
+                p2 = hitInfo.point;
+                triangleId2 = hitInfo.triangleIndex;
+            }
         }
 
         if (Physics.Raycast(r3, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            p3 = hitInfo.point;
-            triangleId3 = hitInfo.triangleIndex;
+            bool snow = true;
+            if (Physics.Raycast(r3, out hitInfo2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hitInfo2.distance < hitInfo.distance)
+                {
+                    snow = false;
+                }
+            }
+            if (snow)
+            {
+                p3 = hitInfo.point;
+                triangleId3 = hitInfo.triangleIndex;
+            }
         }
 
         if (Physics.Raycast(r4, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            p4 = hitInfo.point;
-            triangleId4 = hitInfo.triangleIndex;
+            bool snow = true;
+            if (Physics.Raycast(r4, out hitInfo2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hitInfo2.distance < hitInfo.distance)
+                {
+                    snow = false;
+                }
+            }
+            if (snow)
+            {
+                p4 = hitInfo.point;
+                triangleId4= hitInfo.triangleIndex;
+            }
         }
 
         if (Physics.Raycast(r5, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-            p5 = hitInfo.point;
-            triangleId5 = hitInfo.triangleIndex;
+            bool snow = true;
+            if (Physics.Raycast(r5, out hitInfo2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hitInfo2.distance < hitInfo.distance)
+                {
+                    snow = false;
+                }
+            }
+            if (snow)
+            {
+                p5 = hitInfo.point;
+                triangleId5 = hitInfo.triangleIndex;
+            }
         }
 
         float distance = (_lastHitPosition - transform.position).magnitude;
