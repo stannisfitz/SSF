@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class SnowManager : MonoBehaviour
 {
-    public GameObject SnowObjectPrefab;
+    public GameObject SnowObjectsRoot;
 
     public Material SnowMaterial;
     private static SnowManager _instance;
@@ -19,7 +19,7 @@ public class SnowManager : MonoBehaviour
     void Awake()
     {
         SnowManager._instance = this;
-        GenerateSnow();
+        GenerateSnow(SnowObjectsRoot);
     }
 
     public void SnowBallDropped(SnowBall snowBall)
@@ -99,24 +99,14 @@ public class SnowManager : MonoBehaviour
     }
     
     public List<Vector3> vertices = new List<Vector3>();
-
-    private void GenerateSnow()
+    
+    private void GenerateSnow(GameObject g)
     {
-        if (SnowObjectPrefab != null)
+        BuildDecalForObject(g);
+        for (int i = 0; i <g.transform.childCount; ++i)
         {
-            GameObject.Instantiate(SnowObjectPrefab);
-            return;
+            GenerateSnow(g.transform.GetChild(i).gameObject);
         }
-        BuildDecalForObject(gameObject);
-        Mesh mesh = CreateMesh();
-        GameObject g = new GameObject("SnowObject");
-        g.layer = LayerMask.NameToLayer("SnowPatch");
-        MeshFilter mf = g.AddComponent<MeshFilter>();
-        mf.mesh = mesh;
-        startVertices = mesh.vertices;
-        MeshRenderer mr = g.AddComponent<MeshRenderer>();
-        MeshCollider mc = g.AddComponent<MeshCollider>();
-        mr.material = SnowMaterial;
     }
 
     private List<Vector3> bufVertices = new List<Vector3>();
@@ -127,52 +117,151 @@ public class SnowManager : MonoBehaviour
 
     public void BuildDecalForObject(GameObject affectedObject)
     {
-        float size = 0.5f;
-        for (float i = 0; i < 50; i+= size)
+        if(affectedObject == null || !affectedObject.activeInHierarchy || affectedObject.layer != LayerMask.NameToLayer("Terrain"))
         {
-            for (float j = 0; j < 50; j+= size)
+            return;
+        }
+        MeshRenderer mr = affectedObject.transform.GetComponent<MeshRenderer>();
+        if (mr == null)
+        {
+            return;
+        }
+        bool added = false;
+        Bounds bounds = mr.bounds;
+        float size = 0.5f;
+        float startX = bounds.min.x;
+        float startZ = bounds.min.z;
+        float endX = bounds.max.x;
+        float endZ = bounds.max.z;
+        float lengthX = (endX - startX);
+        float lengthZ = (endZ - startZ);
+        float offset = 0.02f;
+        for (float i = startX+ offset; i < endX; i+= size)
+        {
+            for (float j = startZ + offset; j < endZ; j+= size)
             {
-                Vector3 up = new Vector3(0.0f, 10.0f, 0.0f);
+                float right = i + size;
+                if (right >= endX)
+                {
+                    right = endX- offset;
+                }
+
+                float forward = j + size;
+                if (forward >= endZ)
+                {
+                    forward = endX - offset;
+                }
+                Vector3 up = new Vector3(0.0f, bounds.max.y + 0.1f, 0.0f);
                 Vector3 v1 = new Vector3(i, 0.0f, j);
-                Vector3 v2 = new Vector3(i+ size, 0.0f, j);
-                Vector3 v3 = new Vector3(i, 0.0f, j+ size);
-                Vector3 v4 = new Vector3(i + size, 0.0f, j + size);
+                Vector3 v2 = new Vector3(right, 0.0f, j);
+                Vector3 v3 = new Vector3(i, 0.0f, forward);
+                Vector3 v4 = new Vector3(right, 0.0f, forward);
 
                 Ray r1 = new Ray(v1 + up, Vector3.down);
                 Ray r2 = new Ray(v2 + up, Vector3.down);
                 Ray r3 = new Ray(v3 + up, Vector3.down);
                 Ray r4 = new Ray(v4 + up, Vector3.down);
-                float height = 0.3f;
-                RaycastHit hitInfo;
-                if (Physics.Raycast(r2, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+
+                float h1 = float.NaN;
+                float h2 = float.NaN;
+                float h3 = float.NaN;
+                float h4 = float.NaN;
+                RaycastHit[] rh = Physics.RaycastAll(r1, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain"));
+                foreach (var r in rh)
                 {
-                    v2.y = hitInfo.point.y + height;
-                    if (Physics.Raycast(r3, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
+                    if (r.collider.gameObject == affectedObject)
                     {
-                        v3.y = hitInfo.point.y + height;
-                        if (Physics.Raycast(r1, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
-                        {
-                            v1.y = hitInfo.point.y + height;
-                            Vector3 side1 = v2 - v1;
-                            Vector3 side2 = v3 - v1;
-                            Vector3 normal = Vector3.Cross(side1, side2).normalized;
-                            DecalPolygon poly = new DecalPolygon(v2, v3,v1);
-                            AddPolygon(poly, -normal);
-                        }
-                        if (Physics.Raycast(r4, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain")))
-                        {
-                            v4.y = hitInfo.point.y + height;
-                            Vector3 side1 = v2 - v1;
-                            Vector3 side2 = v4 - v1;
-                            Vector3 normal = Vector3.Cross(side1, side2).normalized;
-                            DecalPolygon poly = new DecalPolygon(v2, v3,v4);
-                            AddPolygon(poly, normal);
-                        }
+                        float height = (v1.x+size*0.5f >= endX || v1.x - size * 0.5f <= startX || v1.z + size * 0.5f >= endZ || v1.z - size * 0.5f <= startZ) ? 0.0f : 0.4f;
+                        h1 = r.point.y + height;
+                        break;
+                    }
+                }
+
+                rh = Physics.RaycastAll(r2, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain"));
+                foreach (var r in rh)
+                {
+                    if (r.collider.gameObject == affectedObject)
+                    {
+                        float height = (v2.x + size * 0.5f >= endX || v2.x - size * 0.5f <= startX || v2.z + size * 0.5f >= endZ || v2.z - size * 0.5f <= startZ) ? 0.0f : 0.4f;
+                        h2 = r.point.y + height;
+                        break;
+                    }
+                }
+
+                rh = Physics.RaycastAll(r3, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain"));
+                foreach (var r in rh)
+                {
+                    if (r.collider.gameObject == affectedObject)
+                    {
+                        float height = (v3.x + size * 0.5f >= endX || v3.x - size * 0.5f <= startX || v3.z + size * 0.5f >= endZ || v3.z - size * 0.5f <= startZ) ? 0.0f : 0.4f;
+                        h3 = r.point.y + height;
+                        break;
+                    }
+                }
+                rh = Physics.RaycastAll(r4, float.MaxValue, 1 << LayerMask.NameToLayer("Terrain"));
+                foreach (var r in rh)
+                {
+                    if (r.collider.gameObject == affectedObject)
+                    {
+                        float height = (v4.x + size * 0.5f >= endX || v4.x - size * 0.5f <= startX || v4.z + size * 0.5f >= endZ || v4.z - size * 0.5f <= startZ) ? 0.0f : 0.4f;
+                        h4 = r.point.y + height;
+                        break;
+                    }
+                }
+
+                if (!float.IsNaN(h2) && !float.IsNaN(h3))
+                {
+                    v2.y = h2;
+                    v3.y = h3;
+                    if (!float.IsNaN(h1))
+                    {
+                        v1.y = h1;
+                        Vector3 side1 = v2 - v1;
+                        Vector3 side2 = v3 - v1;
+                        Vector3 normal = Vector3.Cross(side1, side2).normalized;
+                        DecalPolygon poly = new DecalPolygon(v2, v3,v1);
+                        AddPolygon(poly, -normal);
+                        added = true;
+                    }
+                    if (!float.IsNaN(h4))
+                    {
+                        v4.y = h4;
+                        Vector3 side1 = v2 - v1;
+                        Vector3 side2 = v4 - v1;
+                        Vector3 normal = Vector3.Cross(side1, side2).normalized;
+                        DecalPolygon poly = new DecalPolygon(v2, v3,v4);
+                        AddPolygon(poly, normal);
+                        added = true;
                     }
                 }
             }
         }
+
+        if (!added)
+        {
+            bufVertices.Clear();
+            bufNormals.Clear();
+            bufTexCoords.Clear();
+            bufIndices.Clear();
+            return;
+        }
+
         GenerateTexCoords(0);
+
+        Mesh mesh = CreateMesh();
+        GameObject g = new GameObject("SnowObject" + affectedObject.name);
+        g.layer = LayerMask.NameToLayer("SnowPatch");
+        MeshFilter mf = g.AddComponent<MeshFilter>();
+        mf.mesh = mesh;
+        startVertices = mesh.vertices;
+        MeshRenderer renderer = g.AddComponent<MeshRenderer>();
+        MeshCollider mc = g.AddComponent<MeshCollider>();
+        renderer.material = SnowMaterial;
+
+        bufVertices.Clear();
+        bufNormals.Clear();
+        bufTexCoords.Clear();
+        bufIndices.Clear();
     }
 
     private void AddPolygon(DecalPolygon poly, Vector3 normal)

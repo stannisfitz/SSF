@@ -5509,7 +5509,7 @@ Transform:
   - {fileID: 968824544}
   - {fileID: 319881897}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
 --- !u!1 &641982704
 GameObject:
   m_ObjectHideFlags: 0
@@ -8890,7 +8890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff35709229aac7498a9a6ef4705c71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnowObjectPrefab: {fileID: 0}
+  SnowObjectsRoot: {fileID: 1683770331}
   SnowMaterial: {fileID: 2100000, guid: ca3538eb14fa4e949a5121405f25d9d4, type: 2}
   FortPrefab: {fileID: 132616, guid: 698c3dfdab1243940af31176bf004a30, type: 2}
   vertices: []
