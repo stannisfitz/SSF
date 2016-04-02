@@ -34,7 +34,10 @@ public class FollowObject : MonoBehaviour
             Vector3 pos = hitInfo.point;
             pos.x = transform.position.x;
             pos.z = transform.position.z;
-            transform.position = pos;
+            if (Mathf.Abs(pos.y - transform.position.y) < 0.5f)
+            {
+                transform.position = pos;
+            }
         }
     }
 }
