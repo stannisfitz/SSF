@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         //Vector3 force = forward*CrossPlatformInputManager.GetAxis("Vertical" + (_playerId + 1));
         //float turn = TurnSpeed*CrossPlatformInputManager.GetAxis("Horizontal" + (_playerId + 1));
         float vertical = Input.GetAxis("Vertical" + (_playerId + 1));
+        
         if(Mathf.Abs(vertical) <= 0.1f)
         {
             vertical = 0.0f;
@@ -59,7 +60,8 @@ public class PlayerController : MonoBehaviour
             float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
             force = force.normalized * MoveForce * mult;
 
-            RigidBodyComponent.AddForce(force);
+            //RigidBodyComponent.AddForce(force);
+            transform.position += force * Time.deltaTime;
         }
 
         float speed = RigidBodyComponent.velocity.magnitude;

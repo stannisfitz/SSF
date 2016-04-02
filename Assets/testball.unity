@@ -3923,6 +3923,10 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 25.104
       objectReference: {fileID: 0}
+    - target: {fileID: 191914, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: m_Name
+      value: Player1a
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_IsPrefabParent: 0
@@ -8626,7 +8630,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 191914, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
       propertyPath: m_Name
-      value: Player2
+      value: Player2a
       objectReference: {fileID: 0}
     - target: {fileID: 463726, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
       propertyPath: m_LocalPosition.z
