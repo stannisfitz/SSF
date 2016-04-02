@@ -6,16 +6,20 @@ public class FollowObject : MonoBehaviour
     public bool SnapOnFloor = false;
     public Transform TargetTransform;
     private Vector3 _initialDelta;
+    public float _initialScale;
 
-	void Start ()
+	void Awake ()
     {
-        _initialDelta = transform.position- TargetTransform.position;
+        _initialDelta = transform.InverseTransformDirection(transform.position- TargetTransform.position);
+        _initialScale = TargetTransform.localScale.x;
 
     }
 	
 	void LateUpdate ()
     {
-        transform.position = TargetTransform.position + _initialDelta;
+        float scale = TargetTransform.localScale.x;
+        float r = scale/_initialScale;
+        transform.position = TargetTransform.position + transform.TransformDirection(_initialDelta*r);
         if(SnapOnFloor)
         {
             Snap();

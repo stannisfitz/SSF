@@ -23,9 +23,20 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 forward = RigidBodyComponent.transform.position- Princess.position;
         forward.y = 0.0f;
-        Vector3 force = forward*CrossPlatformInputManager.GetAxis("Vertical" + (_playerId + 1));
-        float turn = TurnSpeed*CrossPlatformInputManager.GetAxis("Horizontal" + (_playerId + 1));
-        Princess.parent.RotateAround(RigidBodyComponent.transform.position, Vector2.up, turn * Time.deltaTime);
+        //Vector3 force = forward*CrossPlatformInputManager.GetAxis("Vertical" + (_playerId + 1));
+        //float turn = TurnSpeed*CrossPlatformInputManager.GetAxis("Horizontal" + (_playerId + 1));
+        float vertical = Input.GetAxis("Vertical" + (_playerId + 1));
+        if(Mathf.Abs(vertical) <= 0.1f)
+        {
+            vertical = 0.0f;
+        }
+        Vector3 force = forward * vertical;
+        float horizontal = Input.GetAxis("Horizontal" + (_playerId + 1));
+        if (Mathf.Abs(horizontal) > 0.1f)
+        {
+            float turn = TurnSpeed * horizontal;
+            Princess.parent.RotateAround(RigidBodyComponent.transform.position, Vector2.up, turn * Time.deltaTime);
+        }
         if (CrossPlatformInputManager.GetButtonDown("Throw" + (_playerId + 1)))
         {
             AnimatorComponent.SetTrigger("Action");
@@ -43,10 +54,13 @@ public class PlayerController : MonoBehaviour
             SnowManager.Instance.AddSnowBall(s);
         }
 
-        float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
-        force = force.normalized * MoveForce*mult;
+        if (force.magnitude > 0.1f)
+        {
+            float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
+            force = force.normalized * MoveForce * mult;
 
-        RigidBodyComponent.AddForce(force);
+            RigidBodyComponent.AddForce(force);
+        }
 
         float speed = RigidBodyComponent.velocity.magnitude;
         AnimatorComponent.SetBool("Walking", speed < 5.0f && speed > 0.1f);

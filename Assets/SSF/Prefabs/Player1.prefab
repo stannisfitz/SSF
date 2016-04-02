@@ -364,6 +364,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 401190}
   - 95: {fileID: 9520866}
+  - 136: {fileID: 13677384}
   m_Layer: 0
   m_Name: princess
   m_TagString: Untagged
@@ -507,7 +508,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.90999985}
+  m_LocalPosition: {x: 0, y: 0, z: -1.055}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 477732}
@@ -613,7 +614,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 3.31, z: 25}
+  m_LocalPosition: {x: 25, y: 2.862, z: 25.189}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463726}
@@ -701,7 +702,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.52, y: 0, z: 2.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475308}
@@ -726,8 +727,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158156}
-  m_LocalRotation: {x: 0.2756374, y: 0, z: 0, w: 0.9612617}
-  m_LocalPosition: {x: 0, y: 2.9500003, z: -3.1000004}
+  m_LocalRotation: {x: 0.17999066, y: 0, z: 0, w: 0.9836683}
+  m_LocalPosition: {x: 0, y: 2.1100001, z: -3.3199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 432936}
@@ -1040,7 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 0
-  MoveForce: 10
+  MoveForce: 4
   TurnSpeed: 100
   RigidBodyComponent: {fileID: 5459478}
   AnimatorComponent: {fileID: 9520866}
@@ -1057,9 +1058,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb06b8a61a5582408eea29f43a067d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSize: 3
-  GrowSpeed: 0.5
-  BounceFactor: 50
+  MaxSize: 2
+  GrowSpeed: 3
+  BounceFactor: 20
   SnowMaterial: []
 --- !u!114 &11495850
 MonoBehaviour:
@@ -1072,8 +1073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c447a7c642a1bd4cb77e125b27f3b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnapOnFloor: 0
+  SnapOnFloor: 1
   TargetTransform: {fileID: 475308}
+  _initialScale: 0
 --- !u!124 &12453732
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1093,6 +1095,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &13677384
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!137 &13702066
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
