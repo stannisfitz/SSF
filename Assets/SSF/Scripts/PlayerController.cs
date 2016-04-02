@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
 
     private int _playerId = 0;
 	
-    void Awake()
+    void Start()
     {
-        _playerId = _numPlayers++;
+        _playerId = GameManager.Instance.AddPlayer();
     }
 	void Update ()
     {
@@ -31,13 +31,16 @@ public class PlayerController : MonoBehaviour
             AnimatorComponent.SetTrigger("Action");
             GameObject snowBall = GameObject.Instantiate(SnowBallPrefab, RigidBodyComponent.transform.position+AnimatorComponent.transform.forward*0.5f, RigidBodyComponent.transform.rotation) as GameObject;
             snowBall.transform.localScale = RigidBodyComponent.gameObject.transform.localScale;
-            snowBall.GetComponent<SnowBall>().SetTeam(Team);
+            SnowBall s = snowBall.GetComponent<SnowBall>();
+            s.SetTeam(Team);
+            s.CurrentState = SnowBall.State.Free;
             Rigidbody r = snowBall.GetComponent<Rigidbody>();
             r.mass = RigidBodyComponent.mass;
             r.velocity = RigidBodyComponent.velocity;
             Vector3 f = r.velocity.magnitude > 0.05f ? r.velocity*2.0f : AnimatorComponent.transform.forward*2.0f;
             r.AddForce(f);
             RigidBodyComponent.gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            SnowManager.Instance.AddSnowBall(s);
         }
 
         float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;

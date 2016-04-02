@@ -8868,8 +8868,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1152844872}
   - 114: {fileID: 1152844873}
+  - 114: {fileID: 1152844874}
   m_Layer: 0
-  m_Name: SnowManager
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8902,6 +8903,19 @@ MonoBehaviour:
   SnowMaterial: {fileID: 2100000, guid: ca3538eb14fa4e949a5121405f25d9d4, type: 2}
   FortPrefab: {fileID: 132616, guid: 698c3dfdab1243940af31176bf004a30, type: 2}
   vertices: []
+--- !u!114 &1152844874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1152844871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf4ac0775bfef746a99296220654cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TotalTime: 120
+  EndTime: 30
 --- !u!1 &1163718750
 GameObject:
   m_ObjectHideFlags: 0

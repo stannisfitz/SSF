@@ -19,13 +19,21 @@ public class SnowBall : MonoBehaviour
     private Collider _collider;
     private Renderer _renderer;
 
+    private Vector3 _startPos;
     private Vector3 _lasPosition;
     private Vector3 _lastHitPosition;
     private bool _wasOnFloor = false;
     private State _currentState = State.Rolling;
     public State CurrentState
     {
-        get { return _currentState; }
+        get { return _currentState;}
+        set { _currentState = value; }
+    }
+
+    private int _team = -1;
+    public int Team
+    {
+        get { return _team; }
     }
 
     void Awake()
@@ -33,6 +41,7 @@ public class SnowBall : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _renderer = GetComponent<Renderer>();
+        _startPos = transform.position;
 
     }
     void Start()
@@ -45,7 +54,15 @@ public class SnowBall : MonoBehaviour
         if (_currentState == State.Rolling)
         {
             UpdatePosition();
+            if (transform.position.y < -20.0f)
+            {
+                transform.position = _startPos;
+            }
             _lasPosition = transform.position;
+        }
+        else if (transform.position.y < -20.0f)
+        {
+            GameObject.Destroy(gameObject);
         }
     }
 
@@ -213,6 +230,7 @@ public class SnowBall : MonoBehaviour
 
     public void SetTeam(int team)
     {
+        _team = team;
         _renderer.material = SnowMaterial[team];
     }
 
@@ -220,11 +238,24 @@ public class SnowBall : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == gameObject.layer)
         {
-            Vector3 delta = transform.position - collision.collider.transform.position;
-            Rigidbody r = collision.collider.GetComponent<Rigidbody>();
-            if (r != null)
+            float scale = transform.localScale.x;
+            float otherScale = collision.collider.transform.localScale.x;
+            State otherState = collision.collider.gameObject.GetComponent<SnowBall>().CurrentState;
+            if (otherState == State.Free && CurrentState == State.Rolling &&  otherScale * 2.0f <= scale)
             {
-                _rigidBody.AddForce(delta.normalized * r.mass * BounceFactor);
+                scale += Mathf.Clamp(scale + otherScale, 0.1f, MaxSize);
+                transform.localScale = new Vector3(scale, scale, scale);
+                _rigidBody.mass = scale;
+                Destroy(collision.collider.gameObject);
+            }
+            else if(otherState == State.Rolling || CurrentState == State.Rolling || otherScale < scale*2.0f)
+            {
+                Vector3 delta = transform.position - collision.collider.transform.position;
+                Rigidbody r = collision.collider.GetComponent<Rigidbody>();
+                if (r != null)
+                {
+                    _rigidBody.AddForce(delta.normalized * r.mass * BounceFactor);
+                }
             }
         }
     }

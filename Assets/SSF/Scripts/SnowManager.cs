@@ -16,10 +16,41 @@ public class SnowManager : MonoBehaviour
     public GameObject FortPrefab;
     
     private List<SnowBall> _snowBalls = new List<SnowBall>();
+
     void Awake()
     {
         SnowManager._instance = this;
         GenerateSnow(SnowObjectsRoot);
+    }
+
+    public void GetPoints(out int team1, out int team2)
+    {
+        team1 = 0;
+        team2 = 0;
+        float p1 = 0.0f;
+        float p2 = 0.0f;
+        foreach(var s in _snowBalls)
+        {
+            if(s == null)
+            {
+                continue;
+            }
+            if(s.Team == 0)
+            {
+                p1 += s.transform.localScale.x;
+            }
+            else
+            {
+                p2 += s.transform.localScale.x;
+            }
+        }
+        team1 = (int) p1;
+        team2 = (int) p2;
+    }
+
+    public void AddSnowBall(SnowBall snowBall)
+    {
+        _snowBalls.Add(snowBall);
     }
 
     public void SnowBallDropped(SnowBall snowBall)
@@ -401,5 +432,4 @@ public class DecalPolygon
         plane.Raycast(ray, out dis);
         return ray.GetPoint(dis);
     }
-
 }
