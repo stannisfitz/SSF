@@ -254,7 +254,7 @@ public class SnowManager : MonoBehaviour
                         Vector3 side1 = v2 - v1;
                         Vector3 side2 = v3 - v1;
                         Vector3 normal = Vector3.Cross(side1, side2).normalized;
-                        DecalPolygon poly = new DecalPolygon(v2, v3,v1);
+                        DecalPolygon poly = new DecalPolygon(v1, v3,v2);
                         AddPolygon(poly, -normal);
                         added = true;
                     }

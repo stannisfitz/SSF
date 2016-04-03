@@ -9876,7 +9876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnowObjectsRoot: {fileID: 326795359}
-  SnowMaterial: {fileID: 2100000, guid: 473d6d3ec0d161b4a85e466c8c6da3fb, type: 2}
+  SnowMaterial: {fileID: 2100000, guid: 2d9ef50c149f7434a8110b8551b84904, type: 2}
   FortPrefab: {fileID: 132616, guid: 698c3dfdab1243940af31176bf004a30, type: 2}
   vertices: []
 --- !u!114 &1152844874
