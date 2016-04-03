@@ -108,11 +108,15 @@ public class SnowManager : MonoBehaviour
         Ray r = new Ray(pos, Vector3.down);
         if (Physics.Raycast(r, out hitInfo, float.MaxValue, 1 << LayerMask.NameToLayer("SnowPatch")))
         {
-                Mesh sharedMesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
+            Mesh sharedMesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
             Mesh mesh = hitInfo.collider.GetComponent<MeshFilter>().sharedMesh;
 
             Vector3[] sharedVertices = sharedMesh.vertices;
             int[] triangles = mesh.triangles;
+            if(sharedVertices[triangles[hitInfo.triangleIndex * 3 + 0]].y < 0.0f)
+            {
+                return false;
+            }
             /*float diff = (sharedVertices[triangles[hitInfo.triangleIndex * 3 + 0]].y - startVertices[triangles[hitInfo.triangleIndex * 3 + 0]].y) +
                 (sharedVertices[triangles[hitInfo.triangleIndex * 3 + 1]].y - startVertices[triangles[hitInfo.triangleIndex * 3 + 1]].y) +
                 (sharedVertices[triangles[hitInfo.triangleIndex * 3 + 2]].y - startVertices[triangles[hitInfo.triangleIndex * 3 + 2]].y);
@@ -120,9 +124,9 @@ public class SnowManager : MonoBehaviour
             {
                 return false;
             }*/
-            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 0]] -= new Vector3(0.0f, 0.1f, 0.0f);
-            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 1]] -= new Vector3(0.0f, 0.1f, 0.0f);
-            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 2]] -= new Vector3(0.0f, 0.1f, 0.0f);
+            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 0]] -= new Vector3(0.0f, 0.3f, 0.0f);
+            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 1]] -= new Vector3(0.0f, 0.3f, 0.0f);
+            sharedVertices[triangles[hitInfo.triangleIndex * 3 + 2]] -= new Vector3(0.0f, 0.3f, 0.0f);
             mesh.vertices = sharedVertices;
             return true;
         }

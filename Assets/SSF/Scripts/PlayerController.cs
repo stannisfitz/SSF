@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
         if (force.magnitude > 0.1f)
         {
-            float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
+            //float mult = (RigidBodyComponent.mass < 1.0f) ? RigidBodyComponent.mass : 1.0f;
+            float mult = (RigidBodyComponent.mass > 1.0f) ? 1.0f / RigidBodyComponent.mass:1.0f;
             force = force.normalized * MoveForce * mult;
 
             //RigidBodyComponent.AddForce(force);
