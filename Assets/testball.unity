@@ -4313,6 +4313,10 @@ Prefab:
       propertyPath: GrowSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11424328, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: DashForce
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
   m_IsPrefabParent: 0
@@ -9727,6 +9731,10 @@ Prefab:
     - target: {fileID: 11468948, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
       propertyPath: GrowSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11424328, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}
+      propertyPath: DashForce
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8147842, guid: d8f0aeb405755d64a839ac943e1fd83d, type: 2}

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     static int _numPlayers = 0;
     public int Team = 0;
     public float MoveForce = 10.0f;
+    public float DashForce = 1000.0f;
     public float TurnSpeed = 100.0f;
     public Rigidbody RigidBodyComponent;
     public Animator AnimatorComponent;
@@ -37,6 +38,10 @@ public class PlayerController : MonoBehaviour
         {
             float turn = TurnSpeed * horizontal;
             Princess.parent.RotateAround(RigidBodyComponent.transform.position, Vector2.up, turn * Time.deltaTime);
+        }
+        if (CrossPlatformInputManager.GetButtonDown("Dash" + (_playerId + 1)))
+        {
+            RigidBodyComponent.AddForce(forward.normalized*DashForce * RigidBodyComponent.mass);
         }
         if (CrossPlatformInputManager.GetButtonDown("Throw" + (_playerId + 1)))
         {
